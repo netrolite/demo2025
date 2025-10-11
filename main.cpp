@@ -1,22 +1,27 @@
+#include <climits>
 #include <iostream>
 
 int main() {
-  unsigned int modulo = 0;
-  std::cin >> modulo;
+  int x;
+  int n;
+  std::cin >> x >> n;
 
-  unsigned int seq_len = 0;
-  unsigned int fib_a = 0;
-  unsigned int fib_b = 1;
+  long long min_diff = INT_MAX;
+  long long closest_num;
 
-  do {
-    ++seq_len;
+  long long cur_num;
 
-    unsigned int new_fib_b = (fib_a + fib_b) % modulo;
-    fib_a = fib_b;
-    fib_b = new_fib_b;
-  } while (fib_a != 0 || fib_b != 1);
+  for (int i = 0; i < n; ++i) {
+    std::cin >> cur_num;
+    long long cur_diff = std::abs(x - cur_num);
 
-  std::cout << seq_len;
+    if (cur_diff <= min_diff) {
+      min_diff = cur_diff;
+      closest_num = std::min(closest_num, cur_num);
+    }
+  }
+
+  std::cout << closest_num << std::endl;
 
   return 0;
 }
