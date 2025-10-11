@@ -2,32 +2,26 @@
 #include <iostream>
 
 int main() {
-  long long X = 0;
-  std::cin >> X;
+  int x;
+  int n;
+  std::cin >> x >> n;
 
-  int N = 0;
-  std::cin >> N;
-  long long *nums = new long long[N];
+  long long min_diff = INT_MAX;
+  long long closest_num;
 
-  for (int i = 0; i < N; ++i) {
-    int num = 0;
-    std::cin >> num;
-    nums[i] = num;
-  }
+  long long cur_num;
 
-  long long closest_val = nums[0];
-  long long smallest_diff = INT_MAX;
+  for (int i = 0; i < n; ++i) {
+    std::cin >> cur_num;
+    long long cur_diff = std::abs(x - cur_num);
 
-  for (int i = 0; i < N; ++i) {
-    long long new_diff = std::abs(X - nums[i]);
-
-    if (new_diff == smallest_diff || new_diff < smallest_diff) {
-      closest_val = nums[i];
-      smallest_diff = new_diff;
+    if (cur_diff <= min_diff) {
+      min_diff = cur_diff;
+      closest_num = std::min(closest_num, cur_num);
     }
   }
 
-  std::cout << closest_val << std::endl;
+  std::cout << closest_num << std::endl;
 
-  delete[] nums;
+  return 0;
 }
