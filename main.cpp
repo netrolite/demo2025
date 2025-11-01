@@ -1,18 +1,24 @@
 #include <iostream>
 
-#define ull unsigned long long
+int fib(unsigned int n) {
+  unsigned int a = 1;
+  unsigned int b = 2;
+  if (n <= 1)
+    return 1;
+  else if (n == 2)
+    return 2;
+
+  for (unsigned int i = 2; i < n; ++i) {
+    int tmp = b;
+    b += a;
+    a = tmp;
+  }
+
+  return b;
+}
 
 int main() {
-  ull numerator, denominator;
-  std::cin >> numerator >> denominator;
-
-  ull remainder = 0;
-  do {
-    std::cout << numerator / denominator << " ";
-    remainder = numerator % denominator;
-    numerator = denominator;
-    denominator = remainder;
-  } while (remainder != 0);
-
-  return 0;
+  new int fib_nums = {};
+  unsigned long n;
+  std::cin >> n;
 }
