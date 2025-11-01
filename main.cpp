@@ -1,24 +1,14 @@
 #include <cstring>
 #include <iostream>
 
+// decimal to binary converter
 int main() {
   char str[65] = {};
   std::cin >> str;
-  unsigned int str_len = strlen(str);
-  unsigned long long result = 0;
+  unsigned long long result = str[0] - '0';
 
-  int power = 1;
-  for (int i = str_len - 1; i >= 0; --i) {
-    int cur_char_as_int;
-
-    if (str[i] == '1') {
-      cur_char_as_int = 1;
-    } else {
-      cur_char_as_int = 0;
-    }
-
-    result += cur_char_as_int * power;
-    power *= 2;
+  for (unsigned short i = 1; i < strlen(str); ++i) {
+    result = result * 2 + (str[i] - '0');
   }
 
   std::cout << result << std::endl;
