@@ -1,33 +1,21 @@
-#include <cmath>
 #include <iostream>
 
 int main() {
-  int n = 0;
-  std::cin >> n;
-  int n_copy = n;
+  const int coefs[] = {1, 2, 1};
+  int x;
+  std::cin >> x;
+  int coefs_len = sizeof(coefs) / sizeof(coefs[0]);
 
-  int summ = 0;
-  int n_len = 0;
-  int deg10 = 1;
+  // coef(n - 1) * x ^ {n - 1} + coef(n - 2) * x ^ {n - 2} + ... coef(1)
 
-  // sum of digits + max 10 degree
-  while (n != 0) {
-    summ += n % 10;
-    n /= 10;
-    ++n_len;
-    deg10 *= 10;
+  int sum = 0;
+  int x_raised = 1;
+  for (int i = 0; i < coefs_len; ++i) {
+    sum += coefs[coefs_len - i - 1] * x_raised;
+    x_raised *= x;
   }
-  deg10 /= 10;
 
-  // output digits left to right
-  n = n_copy;
-  while (deg10 != 0) {
-    int digit = n / deg10;
-    std::cout << digit << ", ";
-    n %= deg10;
-    deg10 /= 10;
-  }
-  std::cout << std::endl;
+  std::cout << sum << std::endl;
 
-  std::cout << summ << std::endl;
+  return 0;
 }
