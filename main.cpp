@@ -1,23 +1,19 @@
 #include <iostream>
 
 int main() {
+  int arr[] = {1, 3, 5};
+  std::cout << arr[1] << ' ' << *(arr + 1) << '\n';
+  std::cout << 1 [arr] << '\n';
+
+  *(arr + 1) = 1000;
+
+  std::cout << arr[1] << ' ' << *(arr + 1) << '\n';
+
   int n = 10;
-  int *ptr = &n;
+  std::cout << n << '\n';
+  int *ptr_n = &n;
+  *ptr_n = 300;
+  std::cout << n << '\n';
 
-  std::cout << ptr << std::endl;
-  std::cout << *ptr << std::endl;
-
-  *ptr = 20;
-
-  std::cout << ptr << std::endl;
-  std::cout << *ptr << std::endl;
-
-  /*
-     возможные операции с указателями:
-     1) dereferencing: *(ptr)
-     2) assignment: ptr = ptr2
-     3) pointer arithmetic (addition/subtraction): +(ptr, 1), -(ptr, 1)
-     4) subtract one pointer from another -(ptr1, ptr2)
-     6) comparison: <,>,==,!=,<=,>=
-  */
+  return 0;
 }
