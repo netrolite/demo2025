@@ -31,5 +31,9 @@ int main() {
   }
   std::cout << sum << std::endl;
 
+  char str[6] = {'h', 'e', 'l', 'l', 'o', '\0'};
+  std::cout << sizeof(str) << std::endl;
+  std::cout << str << std::endl;
+
   return 0;
 }
