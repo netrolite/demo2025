@@ -1,51 +1,33 @@
+#include <cmath>
 #include <iostream>
 
-unsigned long long int factorial(unsigned long long n) {
-  if (n < 2)
-    return 1;
-  return n * factorial(n - 1);
-}
+int main() {
+  int n = 0;
+  std::cin >> n;
+  int n_copy = n;
 
-// хвостовая рекурсия
-void factorial2(unsigned long long *result, unsigned long long n) {
-  if (n < 2)
-    return;
-  *result *= n;
-  return factorial2(result, n - 1);
-}
+  int summ = 0;
+  int n_len = 0;
+  int deg10 = 1;
 
-unsigned long long fib(unsigned int n) {
-  static unsigned long long counter = 0;          // 2**10???
-  static unsigned long long memcounter[20] = {0}; // 2**10???
-  ++counter;
-  if (n < 20)
-    ++memcounter[n];
+  // sum of digits + max 10 degree
+  while (n != 0) {
+    summ += n % 10;
+    n /= 10;
+    ++n_len;
+    deg10 *= 10;
+  }
+  deg10 /= 10;
 
-  std::cout << "fib step: " << counter << ", n = " << n << std::endl;
-  for (int i = 0; i < 20; ++i) {
-    std::cout << memcounter[i] << " ";
+  // output digits left to right
+  n = n_copy;
+  while (deg10 != 0) {
+    int digit = n / deg10;
+    std::cout << digit << ", ";
+    n %= deg10;
+    deg10 /= 10;
   }
   std::cout << std::endl;
 
-  if (n == 0)
-    return 0;
-  if (n == 1)
-    return 1;
-  return fib(n - 2) + fib(n - 1);
-}
-
-int main() {
-  unsigned long long n;
-  std::cin >> n;
-  unsigned long long result = factorial(n);
-  std::cout << n << "! = " << result << std::endl;
-
-  result = 1;
-  factorial2(&result, n);
-  std::cout << n << "! = " << result << std::endl;
-
-  result = fib(n);
-  std::cout << "fib(" << n << ") = " << result << std::endl;
-
-  return 0;
+  std::cout << summ << std::endl;
 }
