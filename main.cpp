@@ -1,22 +1,23 @@
 #include <iostream>
 
-// decimal to binary converter
 int main() {
-  unsigned long long dec_num;
-  std::cin >> dec_num;
-  char bin_str[65] = {};
+  int n = 10;
+  int *ptr = &n;
 
-  unsigned short idx = 0;
-  while (dec_num != 0) {
-    bin_str[idx++] = (dec_num % 2) + '0'; // int to char of that int
-    dec_num /= 2;
-  }
+  std::cout << ptr << std::endl;
+  std::cout << *ptr << std::endl;
 
-  --idx;
-  for (; idx >= 0; --idx) {
-    std::cout << bin_str[idx];
-  }
-  std::cout << std::endl;
+  *ptr = 20;
 
-  return 0;
+  std::cout << ptr << std::endl;
+  std::cout << *ptr << std::endl;
+
+  /*
+     возможные операции с указателями:
+     1) dereferencing: *(ptr)
+     2) assignment: ptr = ptr2
+     3) pointer arithmetic (addition/subtraction): +(ptr, 1), -(ptr, 1)
+     4) subtract one pointer from another -(ptr1, ptr2)
+     6) comparison: <,>,==,!=,<=,>=
+  */
 }
