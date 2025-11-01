@@ -1,27 +1,51 @@
-#include <climits>
 #include <iostream>
 
-int main() {
-  int x;
-  int n;
-  std::cin >> x >> n;
+unsigned long long int factorial(unsigned long long n) {
+  if (n < 2)
+    return 1;
+  return n * factorial(n - 1);
+}
 
-  long long min_diff = INT_MAX;
-  long long closest_num;
+// хвостовая рекурсия
+void factorial2(unsigned long long *result, unsigned long long n) {
+  if (n < 2)
+    return;
+  *result *= n;
+  return factorial2(result, n - 1);
+}
 
-  long long cur_num;
+unsigned long long fib(unsigned int n) {
+  static unsigned long long counter = 0;          // 2**10???
+  static unsigned long long memcounter[20] = {0}; // 2**10???
+  ++counter;
+  if (n < 20)
+    ++memcounter[n];
 
-  for (int i = 0; i < n; ++i) {
-    std::cin >> cur_num;
-    long long cur_diff = std::abs(x - cur_num);
-
-    if (cur_diff <= min_diff) {
-      min_diff = cur_diff;
-      closest_num = std::min(closest_num, cur_num);
-    }
+  std::cout << "fib step: " << counter << ", n = " << n << std::endl;
+  for (int i = 0; i < 20; ++i) {
+    std::cout << memcounter[i] << " ";
   }
+  std::cout << std::endl;
 
-  std::cout << closest_num << std::endl;
+  if (n == 0)
+    return 0;
+  if (n == 1)
+    return 1;
+  return fib(n - 2) + fib(n - 1);
+}
+
+int main() {
+  unsigned long long n;
+  std::cin >> n;
+  unsigned long long result = factorial(n);
+  std::cout << n << "! = " << result << std::endl;
+
+  result = 1;
+  factorial2(&result, n);
+  std::cout << n << "! = " << result << std::endl;
+
+  result = fib(n);
+  std::cout << "fib(" << n << ") = " << result << std::endl;
 
   return 0;
 }
