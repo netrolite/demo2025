@@ -1,16 +1,22 @@
-#include <cstring>
 #include <iostream>
 
 // decimal to binary converter
 int main() {
-  char str[65] = {};
-  std::cin >> str;
-  unsigned long long result = str[0] - '0';
+  unsigned long long dec_num;
+  std::cin >> dec_num;
+  char bin_str[65] = {};
 
-  for (unsigned short i = 1; i < strlen(str); ++i) {
-    result = result * 2 + (str[i] - '0');
+  unsigned short idx = 0;
+  while (dec_num != 0) {
+    bin_str[idx++] = (dec_num % 2) + '0'; // int to char of that int
+    dec_num /= 2;
   }
 
-  std::cout << result << std::endl;
+  --idx;
+  for (; idx >= 0; --idx) {
+    std::cout << bin_str[idx];
+  }
+  std::cout << std::endl;
+
   return 0;
 }
