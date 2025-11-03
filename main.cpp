@@ -1,23 +1,16 @@
 #include <iostream>
 
-int main() {
-  int arr[] = {1, 3, 5};
-  // std::cout << arr[1] << ' ' << *(arr + 1) << '\n';
-  // std::cout << 1 [arr] << '\n';
-  int n = 69696969;
-
-  for (int i = -10; i < 10; ++i) {
-    std::cout << *(arr + i) << '\n';
+void hanoi(int n, int from = 1, int to = 3, int tmp = 2) {
+  if (n > 1) {
+    hanoi(n - 1, from, tmp, to);
+    hanoi(1, from, to, tmp);
+    hanoi(n - 1, tmp, to, from);
+  } else {
+    std::cout << from << " -> " << to << std::endl;
   }
-  // *(arr + 1) = 1000;
-  //
-  // std::cout << arr[1] << ' ' << *(arr + 1) << '\n';
-  //
-  // int n = 10;
-  // std::cout << n << '\n';
-  // int *ptr_n = &n;
-  // *ptr_n = 300;
-  // std::cout << n << '\n';
+}
 
+int main() {
+  hanoi(3);
   return 0;
 }
