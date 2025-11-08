@@ -1,16 +1,24 @@
+#include <cstring>
 #include <iostream>
 
-void hanoi(int n, int from = 1, int to = 3, int tmp = 2) {
-  if (n > 1) {
-    hanoi(n - 1, from, tmp, to);
-    hanoi(1, from, to, tmp);
-    hanoi(n - 1, tmp, to, from);
-  } else {
-    std::cout << from << " -> " << to << std::endl;
+int main(int argc, char *argv[]) {
+  for (int i = 0; i < argc; ++i) {
+    for (int j = 0; j < strlen(argv[i]); ++j) {
+      char c = argv[i][j];
+      bool is_uppercase = c >= 'a' and c <= 'z'; // matvey moroZOV
+      if (is_uppercase) {
+        std::cout << (char)(c - 'a' + 'A');
+      } else {
+        std::cout << c;
+      }
+    }
+    std::cout << '\n';
   }
-}
 
-int main() {
-  hanoi(3);
+  char c1 = 127;
+  char c2 = 200;
+  std::cout << c1 + c2 << '\n';
+  auto y = c1 + c2;
+
   return 0;
 }
