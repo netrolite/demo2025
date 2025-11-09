@@ -1,75 +1,63 @@
+#include <cstdint>
+#include <cstring>
 #include <iostream>
 
-void str_to_lower(char *str) {
-  while (*str != 0) {
-    char ch = *str;
-    if (ch >= 'A' && ch <= 'Z') {
-      int offset = 'a' - 'A';
-      *str += offset;
+void uint32_to_ip(uint32_t ip, char address[]) {
+  for (int i = 0; i < 32; ++i) {
+    address[i] = '0';
+  }
+  address[32] = '\0';
+
+  int idx = 31;
+  while (ip != 0) {
+    int digit = ip % 2;
+    address[idx] = digit == 0 ? '0' : '1';
+    ip /= 2;
+    --idx;
+  }
+
+  int cur_char_idx = 0;
+  for (int i = 7; i < 32; i += 8) {
+    unsigned int power = 1;
+    unsigned int part = 0;
+    int lower_lim = i - 7;
+
+    for (int j = i; j >= lower_lim; --j) {
+      unsigned short cur_digit_as_int = address[j] == '0' ? 0 : 1;
+      part += cur_digit_as_int * power;
+      power <<= 1;
     }
-    ++str;
-  }
-}
 
-// wroldaaa
-// worlld
-/*
-  r = 1
-  k = 1
-  q = 1
-  o = 1
-  d = 1
-  l = 1
-  w = 1
-*/
-const int CHARS_ARR_LEN = 128;
-
-bool is_char_lower(char ch) {
-  if (ch >= 'a' && ch <= 'z') {
-    return true;
-  }
-  return false;
-}
-
-bool is_anagram(const char *str1, const char *str2) {
-  unsigned short char_occurences_src[CHARS_ARR_LEN] = {};
-  unsigned short char_occurences_target[CHARS_ARR_LEN] = {};
-  int offset_to_lower_char = 'a' - 'A';
-
-  for (; *str1 != 0; ++str1) {
-    if (*str1 == ' ')
-      continue;
-
-    if (is_char_lower(*str1)) {
-      ++char_occurences_src[*str1];
+    unsigned int hundreds = part / 100;
+    unsigned int tens = (part / 10) % 10;
+    unsigned int ones = part % 10;
+    if (part >= 100 && part <= 999) {
+      address[cur_char_idx++] = hundreds + '0';
+      address[cur_char_idx++] = tens + '0';
+      address[cur_char_idx++] = ones + '0';
+    } else if (part >= 10) {
+      address[cur_char_idx++] = tens + '0';
+      address[cur_char_idx++] = ones + '0';
     } else {
-      ++char_occurences_src[*str1 + offset_to_lower_char];
+      address[cur_char_idx++] = ones + '0';
     }
+
+    bool is_last_iteration = i == 31;
+    if (!is_last_iteration)
+      address[cur_char_idx++] = '.';
   }
 
-  for (; *str2 != 0; ++str2) {
-    if (*str2 == ' ')
-      continue;
-
-    if (is_char_lower(*str2)) {
-      ++char_occurences_target[*str2];
-    } else {
-      ++char_occurences_target[*str2 + offset_to_lower_char];
-    }
-  }
-
-  for (int i = 0; i < CHARS_ARR_LEN; ++i) {
-    if (char_occurences_src[i] != char_occurences_target[i]) {
-      return false;
-    }
-  }
-
-  return true;
+  address[cur_char_idx] = '\0';
 }
 
 int main() {
-  char str1[] = "student";
-  char str2[] = "s tUd nte";
-  std::cout << is_anagram(str1, str2) << std::endl;
+  char address[33];
+  uint32_to_ip(534543545, address);
+
+  for (int i = 0; i < strlen(address); ++i) {
+    std::cout << address[i];
+  }
+  std::cout << std::endl;
+
   return 0;
 }
