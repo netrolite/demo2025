@@ -1,61 +1,38 @@
-#include <cstdint>
 #include <cstring>
 #include <iostream>
 
-void uint32_to_ip(uint32_t ip, char address[]) {
-  for (int i = 0; i < 32; ++i) {
-    address[i] = '0';
-  }
-  address[32] = '\0';
+/*
+  This iss an example!
+  0123456789
+  4th index is a space
+  so everything before is a word
+*/
 
-  int idx = 31;
-  while (ip != 0) {
-    int digit = ip % 2;
-    address[idx] = digit == 0 ? '0' : '1';
-    ip /= 2;
-    --idx;
-  }
+void reverse_words(char str[]) {
+  int cur_word_1st_char_idx = 0;
+  int str_len = strlen(str);
 
-  int cur_char_idx = 0;
-  for (int i = 7; i < 32; i += 8) {
-    unsigned int power = 1;
-    unsigned int part = 0;
-    int lower_lim = i - 7;
+  for (int i = 0; i <= str_len; ++i) {
+    if (str[i] == ' ' || i == str_len) {
+      int upper_lim = cur_word_1st_char_idx + (i - cur_word_1st_char_idx) / 2;
+      for (int j = cur_word_1st_char_idx; j < upper_lim; ++j) {
+        int offset = j - cur_word_1st_char_idx + 1;
+        char tmp = str[j];
+        str[j] = str[i - offset];
+        str[i - offset] = tmp;
+      }
 
-    for (int j = i; j >= lower_lim; --j) {
-      unsigned short cur_digit_as_int = address[j] == '0' ? 0 : 1;
-      part += cur_digit_as_int * power;
-      power <<= 1;
+      cur_word_1st_char_idx = i + 1;
     }
-
-    unsigned int hundreds = part / 100;
-    unsigned int tens = (part / 10) % 10;
-    unsigned int ones = part % 10;
-    if (part >= 100 && part <= 999) {
-      address[cur_char_idx++] = hundreds + '0';
-      address[cur_char_idx++] = tens + '0';
-      address[cur_char_idx++] = ones + '0';
-    } else if (part >= 10) {
-      address[cur_char_idx++] = tens + '0';
-      address[cur_char_idx++] = ones + '0';
-    } else {
-      address[cur_char_idx++] = ones + '0';
-    }
-
-    bool is_last_iteration = i == 31;
-    if (!is_last_iteration)
-      address[cur_char_idx++] = '.';
   }
-
-  address[cur_char_idx] = '\0';
 }
 
 int main() {
-  char address[33];
-  uint32_to_ip(534543545, address);
+  char str[] = "This    is an example!!!";
+  reverse_words(str);
 
-  for (int i = 0; i < strlen(address); ++i) {
-    std::cout << address[i];
+  for (int i = 0; i < strlen(str); ++i) {
+    std::cout << str[i];
   }
   std::cout << std::endl;
 
